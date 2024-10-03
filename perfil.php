@@ -3,8 +3,8 @@
     include('conexao.php');
 
     if (isset($_POST['logout'])) {
-        session_destroy(); // Destruir todas as variáveis de sessão
-        header("Location: index.php"); // Redirecionar para a página de login
+        session_destroy();
+        header("Location: index.php");
         exit();
     }
 ?>
@@ -20,10 +20,8 @@
 </head>
 <body>
     <?php 
-       // Obter o ID do usuário logado
         $id_cozinheiro = $_SESSION['id'];
 
-        // Query para buscar os dados do cozinheiro logado
         $sql_user = "SELECT nome, data_nasc, especializacao, experiencia, receitas, contato, foto, biografia FROM cozinheiro WHERE id = :id";
         $stmt_user = $conn->prepare($sql_user);
         $stmt_user->bindParam(':id', $id_cozinheiro);
@@ -34,22 +32,17 @@
         $stmt_receitas->bindParam(':id_cozinheiro', $id_cozinheiro);
         $stmt_receitas->execute();
 
-        // Obter todas as receitas
-         $receitas = $stmt_receitas->fetchAll(PDO::FETCH_ASSOC);
+        $receitas = $stmt_receitas->fetchAll(PDO::FETCH_ASSOC);
 
-        // Obter os dados do cozinheiro
         $cozinheiro = $stmt_user->fetch(PDO::FETCH_ASSOC);
 
         if ($cozinheiro) {
-            // Função para calcular a idade a partir da data de nascimento
             function calcularIdade($data_nasc) {
                 $nascimento = new DateTime($data_nasc);
                 $hoje = new DateTime();
                 $idade = $hoje->diff($nascimento);
-                return $idade->y; // Retorna a idade em anos
+                return $idade->y;
             }
-    
-            // Calculando a idade
             $idade = calcularIdade($cozinheiro['data_nasc']);
         } else {
             echo "Erro: Cozinheiro não encontrado.";
@@ -57,14 +50,19 @@
         }
     ?>
 
-        <p class="welcome-message">Bem-vindo, <?php echo $cozinheiro['nome']; ?>!</p>
+        <p class="mensagem">Bem-vindo, <?php echo $cozinheiro['nome']; ?>!</p>
         <div class="container">
             <div class="container_perfil">
-                <?php if (!empty($cozinheiro['foto'])): ?>
-                    <img src="<?php echo htmlspecialchars($cozinheiro['foto']); ?>" alt="Foto de perfil de <?php echo $cozinheiro['nome']; ?>" class="profile-photo">
-                <?php else: ?>
-                    <div class="profile-photo" style="background-color: #e1e8ed;"></div> <!-- Placeholder se não houver foto -->
-                <?php endif; ?>
+                <div class="container_edit">
+                    <?php if (!empty($cozinheiro['foto'])): ?>
+                        <img src="<?php echo htmlspecialchars($cozinheiro['foto']); ?>" alt="Foto de perfil de <?php echo $cozinheiro['nome']; ?>" class="profile-photo">
+                    <?php else: ?>
+                        <div class="profile-photo" style="background-color: #e1e8ed;"></div> <!-- Placeholder para foto -->
+                        <?php endif; ?>
+                    <div class="perfil_edit">
+                        <a href="edit_data.php" class="btn_edit">Editar Perfil</a>
+                    </div>
+                </div>
                 
 
                 <h1 class="name"><?php echo $cozinheiro['nome']; ?></h1>
@@ -77,9 +75,6 @@
 
                 <p class="info"><span class="bold">Receitas:</span> <?php echo $cozinheiro['receitas']; ?></p>
                 <p class="info"><span class="bold">Contato:</span> <?php echo $cozinheiro['contato']; ?></p>
-                <div class="perfil_edit">
-                    <a href="edit_data.php" class="btn_edit">Editar Perfil</a>
-                </div>
             </div>
 
             <div class="container_bio">
@@ -90,7 +85,13 @@
 
         
         <div class="container_receitas">
-            <h2>Minhas Receitas</h2>
+            <div class="posicao_add_receita">
+                <h2>Minhas Receitas</h2>
+                <div class="add_receita">
+                    <a href="cad_receita.php" class="btn_add_receita">+</a>
+                </div>
+            </div>
+
             <?php if (count($receitas) > 0): ?>
                 <ul>
                     <?php foreach ($receitas as $receita): ?>
@@ -118,7 +119,6 @@
             
         </div>
 
-        <!-- Botão de Logout -->
         <form method="POST">
             <button type="submit" name="logout" class="logout-button">Logout</button>
         </form>

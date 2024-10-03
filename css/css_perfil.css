@@ -1,39 +1,35 @@
-/* Reset de estilos */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Corpo da página */
 body {
-    font-family: 'Arial', sans-serif; /* Fonte padrão */
-    background-color: #f5f8fa; /* Fundo claro */
-    color: #14171a; /* Texto escuro */
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f8fa;
+    color: #14171a;
     padding: 20px;
 }
 
-/* Frase de boas-vindas */
-.welcome-message {
-    font-size: 18px; /* Tamanho da fonte menor */
-    color: #17BF63; /* Cor verde */
+.mensagem {
+    font-size: 18px;
+    color: #17BF63;
     margin-bottom: 10px;
 }
+
 .container{
     display: flex;
 }
 
-/* Container principal */
 .container_perfil {
-    width: 400px; /* Largura reduzida */
-    background-color: #ffffff; /* Fundo branco para o perfil */
+    width: 400px;
+    background-color: #ffffff;
     border-radius: 8px;
     border: 1px solid #cccc;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     padding: 15px;
-    margin-right: 20px; /* Alinhado à esquerda */
-    border-left: 5px solid #17BF63; /* Delimitação vertical */
-    /*position: relative; /* Para posicionar o botão de logout */
+    margin-right: 20px;
+    border-left: 5px solid #17BF63;
 }
 
 .container_bio{
@@ -42,74 +38,68 @@ body {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 15px;
-    width: 800px; 
+    width: 800px;
 }
 
 .container p {
-    margin: 15px 0; /* Espaçamento vertical entre parágrafos */
+    margin: 15px 0;
 }
 
-/* Estilo da foto de perfil */
 .profile-photo {
-    width: 100px; /* Largura da foto */
-    height: 100px; /* Altura da foto */
-    border-radius: 50%; /* Formato circular */
-    object-fit: cover; /* Cobre todo o espaço */
-    margin-bottom: 15px; /* Espaçamento abaixo da foto */
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 15px;
 }
 
-/* Nome do cozinheiro */
 .name {
-    font-size: 24px; /* Tamanho maior para o nome */
+    font-size: 24px;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-/* Container para idade, especialização e experiência */
 .info-container {
     margin-bottom: 10px;
 }
 
-/* Estilo para as informações */
 .info {
-    font-size: 16px; /* Tamanho da fonte */
+    font-size: 16px;
 }
 
-/* Destacar palavras em negrito */
 .bold {
-    font-weight: bold; /* Negrito */
+    font-weight: bold;
 }
 
-/* Botão de Logout */
 .logout-button {
-    background-color: #738bbe; /* Cor de fundo para o botão */
-    color: #ffffff; /* Cor do texto do botão */
+    background-color: #738bbe;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
-    position: absolute; /* Posicionar o botão no canto superior direito */
+    position: absolute;
     top: 10px;
     right: 20px;
 }
 
 .logout-button:hover {
-    background-color: #3a4a6e; /* Cor ao passar o mouse */
+    background-color: #3a4a6e;
 }
 
 .biografia-container {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 15px;
-    margin-left: 20px; /* Espaço entre os dois containers */
-    width: 300px; /* Defina uma largura adequada para o container da biografia */
-    display: inline-block; /* Faz o container se posicionar ao lado do outro */
-    vertical-align: top; /* Alinha verticalmente ao topo */
+    margin-left: 20px;
+    width: 300px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 h2 {
-    color: #2c3e50; /* Cor para o título */
+    color: #2c3e50;
 }
 
 .container_receitas {
@@ -117,19 +107,19 @@ h2 {
 }
 
 .container_receitas h2 {
-    font-size: 1.5em; /* Tamanho da fonte do título */
-    color: #333; /* Cor do texto do título */
-    margin-bottom: 15px; /* Margem inferior do título */
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 15px;
 }
 
 .container_receitas ul {
-    list-style-type: none; /* Remove os marcadores da lista */
-    padding: 0; /* Remove o espaçamento interno da lista */
+    list-style-type: none;
+    padding: 0;
 }
 
 .receita_content {
     display: flex;
-    align-items: flex-start; /* Alinha a descrição ao topo da imagem */
+    align-items: flex-start;
 }
 
 .receita_item {
@@ -160,37 +150,62 @@ h2 {
 }
 
 .receita_item h3 {
-    font-size: 20px; /* Tamanho da fonte do nome da receita */
-    color: #333; /* Cor do texto do nome da receita */
-    margin-bottom: 5px; /* Margem inferior do nome da receita */
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 5px;
 }
 
 .receita_item img {
-    display: block; /* Para exibir a imagem como um bloco */
-    margin-top: 10px; /* Margem superior da imagem */
-    border-radius: 5px; /* Bordas arredondadas da imagem */
-    max-width: 100%; /* Largura máxima da imagem */
-    height: auto; /* Altura automática para manter a proporção */
+    display: block;
+    margin-top: 10px;
+    border-radius: 5px;
+    max-width: 100%;
+    height: auto;
+}
+
+.container_edit{
+    display: flex;
+    align-items: flex-start;
+    gap: 35%;
 }
 
 .perfil_edit{
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-bottom: 20px;
+    align-items: flex-start;
 }
 
 .btn_edit{
     padding: 10px 20px;
-    background-color: #3a4a6e;
+    background-color: #4e608b;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
-    margin-left: auto; /* Alinha o botão à direita */
+    margin-right: auto;
     transition: background-color 0.3s ease;
 }
 
 .btn_edit:hover{
-    background-color: #2c3e50;;
+    background-color: #2c3e50;
+}
+
+.posicao_add_receita {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn_add_receita{
+    padding: 10px 20px;
+    background-color: #19a357;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn_add_receita:hover{
+    background-color: #084908;
 }

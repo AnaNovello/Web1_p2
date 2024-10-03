@@ -14,8 +14,7 @@
             }elseif ($senha !== $confirmar_senha) {
                 echo "As senhas não coincidem!";
             } else {
-                // Hash da senha para segurança
-                //$senha_hashed = password_hash($senha, PASSWORD_DEFAULT);
+                //$senha_hashed = password_hash($senha, PASSWORD_DEFAULT); --aplicar o hash futuramente quando o sistema estiver melhor consolidado
                 $sql_verificar = "SELECT * FROM cozinheiro WHERE email = :email";
                 $stmt_verificar = $conn->prepare($sql_verificar);
                 $stmt_verificar->bindParam(':email', $email);
@@ -23,7 +22,6 @@
                 if ($stmt_verificar->rowCount() > 0) {
                     echo "Este e-mail já está cadastrado!";
                 } else{
-                    // Inserir o novo usuário no banco de dados
                     $sql = "INSERT INTO cozinheiro (nome, cpf, email, senha) 
                             VALUES (:nome, :cpf, :email, :senha)";
                     $stmt = $conn->prepare($sql);

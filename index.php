@@ -5,46 +5,34 @@
         if (strlen($_POST['email']) == 0 || strlen($_POST['senha']) == 0){
             echo "Os campos E-mail e Senha são obrigatórios!";
         }else{
-            // Escapar os dados recebidos para evitar SQL injection (com bindParam em PDO)
             $email = $_POST['email'];
             $senha = $_POST['senha'];
 
-            // Preparar a query para evitar SQL injection
+            //Prepara a query para evitar SQL injection
             $sql_code = "SELECT * FROM cozinheiro WHERE email = :email AND senha = :senha";
             $stmt = $conn->prepare($sql_code);
-
-            // Atribuir os valores aos parâmetros (:email e :senha)
             $stmt->bindParam(':email', $email);
             $stmt->bindParam(':senha', $senha);
 
-            // Executar a query
             $stmt->execute();
 
-            // Verificar quantos resultados foram retornados
             $quantidade = $stmt->rowCount();
 
             if ($quantidade == 1) {
-                
-                // Fetch para obter os dados do usuário
                 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                // Iniciar sessão se ainda não foi iniciada
                 if (!isset($_SESSION)) {
                     session_start();
                 }
 
-                // Definir os dados do usuário na sessão
                 $_SESSION['id'] = $usuario['id'];
                 $_SESSION['nome'] = $usuario['nome'];
 
-                // Redirecionar para o painel
                 header("Location: perfil.php");
-
             } else {
                 echo "Falha ao logar! E-mail ou senha incorretos";
             }
         }
-
     }
 ?>
 
