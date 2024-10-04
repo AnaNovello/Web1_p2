@@ -122,3 +122,17 @@ ALTER TABLE cozinheiro
 ALTER COLUMN senha TYPE VARCHAR(60);
 
 -------------------------------------------------------------------------
+
+ALTER TABLE cozinheiro
+ALTER COLUMN especializacao TYPE VARCHAR(24);
+
+-------------------------------------------------------------------------
+
+ALTER TABLE public.cozinheiro
+ADD COLUMN id_especializacao integer;
+
+ALTER TABLE public.cozinheiro
+ADD CONSTRAINT fk_id_especializacao FOREIGN KEY (id_especializacao)
+REFERENCES public.especializacao (id);
+
+

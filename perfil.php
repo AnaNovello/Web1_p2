@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil</title>
-    <link rel="stylesheet" href="css/css_perfil.css">
+    <link rel="stylesheet" href="css/style_perfil.css">
 </head>
 </head>
 <body>
@@ -50,7 +50,7 @@
         }
     ?>
 
-        <p class="mensagem">Bem-vindo, <?php echo $cozinheiro['nome']; ?>!</p>
+        <p class="mensagem">Bem-vindo(a), <?php echo $cozinheiro['nome']; ?>!</p>
         <div class="container">
             <div class="container_perfil">
                 <div class="container_edit">
@@ -83,7 +83,41 @@
             </div>
         </div>
 
-        
+        <div class="container_espec">
+            <div class="posicao_add_receita">
+                <h2>Outras Especializações</h2>
+                <div class="add_receita">
+                    <a href="cad_espec.php" class="btn_add_receita">+</a>
+                </div>
+            </div>
+
+            <?php if (count($receitas) > 0): ?>
+                <ul>
+                    <?php foreach ($receitas as $receita): ?>
+                        <div class="receita_item">
+                            <h3><?php echo htmlspecialchars($receita['nome']); ?></h3>
+                            <div class="receita_content">
+                                <?php if (!empty($receita['foto'])): ?>
+                                    <div class="receita_img">
+                                        <img src="<?php echo htmlspecialchars($receita['foto']); ?>" alt="Foto da receita <?php echo htmlspecialchars($receita['nome']); ?>" style="max-width: 200px;">
+                                    </div>
+                                <?php else: ?>
+                                    <p>Imagem não disponível</p>
+                                <?php endif; ?>
+                                
+                                <div class="receita_descricao">
+                                    <p><?php echo htmlspecialchars($receita['descricao']); ?></p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>Você ainda não tem outras especializações cadastradas.</p>
+            <?php endif; ?>
+            
+        </div>
+
         <div class="container_receitas">
             <div class="posicao_add_receita">
                 <h2>Minhas Receitas</h2>

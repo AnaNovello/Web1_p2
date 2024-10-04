@@ -8,7 +8,6 @@
             $email = $_POST['email'];
             $senha = $_POST['senha'];
 
-            //Prepara a query para evitar SQL injection
             $sql_code = "SELECT * FROM cozinheiro WHERE email = :email AND senha = :senha";
             $stmt = $conn->prepare($sql_code);
             $stmt->bindParam(':email', $email);
@@ -42,7 +41,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="css\css_login.css"> 
+    <link rel="stylesheet" href="css\style_login.css"> 
 </head>
 <body>
     <div class="login-container">
@@ -61,7 +60,7 @@
             </p>
             <div class="container_cad">
                 <p class="cadastro">
-                    <a type="" href="cadastro.php" class="btn_cadastro">Cadastre-se</a>
+                    <a href="cadastro.php" class="btn_cadastro">Cadastre-se</a>
                 </p>
 
                 <p class="redefine_senha">
