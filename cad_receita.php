@@ -3,7 +3,6 @@ include('id_sessao.php');
 include('conexao.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obter dados do formulário
     $id_cozinheiro = $_SESSION['id'];
     $nome = $_POST['nome'];
     $descricao = $_POST['descricao'];
@@ -25,35 +24,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $upload_ok = 1;
     $imageFileType = strtolower(pathinfo($foto_path, PATHINFO_EXTENSION));
 
-    // Verificar se o arquivo é uma imagem
-    /*$check = getimagesize($foto['tmp_name']);
-    if ($check === false) {
-        $upload_ok = 0;
-        $erro = "O arquivo não é uma imagem.";
-    }*/
-
-    // Verificar se o arquivo já existe
-    /*if (file_exists($foto_path)) {
-        $upload_ok = 0;
-        $erro = "Desculpe, já existe um arquivo com esse nome.";
-    }*/
-
-    // Verificar tamanho do arquivo (exemplo: máximo 2MB)
-    /*if ($foto['size'] > 2000000) {
-        $upload_ok = 0;
-        $erro = "O arquivo é muito grande.";
-    }*/
-
-    // Permitir apenas certos formatos de imagem
     if (!in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
         $upload_ok = 0;
         $erro = "Apenas arquivos JPG, JPEG, PNG e GIF são permitidos.";
     }
 
-    // Tentar fazer o upload
     if ($upload_ok == 1) {
         if (move_uploaded_file($foto['tmp_name'], $foto_path)) {
-            // Inserir dados na tabela receita
             $sql_insert = "INSERT INTO receita (id_cozinheiro, nome, descricao, foto) VALUES (:id_cozinheiro, :nome, :descricao, :foto)";
             $stmt_insert = $conn->prepare($sql_insert);
             $stmt_insert->bindParam(':id_cozinheiro', $id_cozinheiro);
@@ -62,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_insert->bindParam(':foto', $foto_path);
 
             if ($stmt_insert->execute()) {
-                // Redirecionar para o perfil após a inserção
                 header("Location: perfil.php");
                 exit();
             } else {

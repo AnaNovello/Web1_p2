@@ -159,7 +159,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div>
                 <button type="submit" class="btn_salvar">Salvar</button>
             </div>
-            <!-- <div>
+            <!-- arquivo feito pra casos de teste, não usado no sistema final 
+            <div>
                 <a href="galeria.php" class="">diretorio</a>
             </div> -->
             <div class="div_delete">

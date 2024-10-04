@@ -203,6 +203,20 @@ h2 {
     margin-bottom: 20px;
 }
 
+.btn_del_receita{
+    padding: 10px 20px;
+    background-color: #b92929;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn_del_receita:hover{
+    background-color: #6e1818;
+}
+
 .btn_add_receita{
     padding: 10px 20px;
     background-color: #19a357;
@@ -234,10 +248,10 @@ h2 {
 
 .competencia_item {
     margin-bottom: 20px;
-    padding: 10px; /* Adicionado */
-    border: 1px solid #ddd; /* Adicionado */
-    border-radius: 5px; /* Adicionado */
-    background-color: #f9f9f9; /* Adicionado */
+    padding: 10px;
+    border: 1px solid #ddd; 
+    border-radius: 5px; 
+    background-color: #f9f9f9; 
     overflow-y: auto;
     word-wrap: break-word; 
     word-break: break-word;
@@ -250,6 +264,6 @@ h2 {
 }
 
 .competencia_content {
-    font-size: 16px; /* Adicionado */
-    line-height: 1.5; /* Adicionado */
+    font-size: 16px;
+    line-height: 1.5; 
 }

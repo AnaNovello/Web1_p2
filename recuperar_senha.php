@@ -13,7 +13,7 @@
             }elseif ($senha !== $confirmar_senha) {
                 echo "As senhas não coincidem!";
             } else {
-                //$senha_hashed = password_hash($senha, PASSWORD_DEFAULT); --aplicar o hash futuramente quando o sistema estiver mais consolidado
+                //$senha_hashed = password_hash($senha, PASSWORD_DEFAULT); //hash não aplicado
                 $sql_verificar_email = "SELECT * FROM cozinheiro WHERE email = :email";
                 $sql_verificar_email = $conn->prepare($sql_verificar_email);
                 $sql_verificar_email->bindParam(':email', $email);

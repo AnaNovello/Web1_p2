@@ -32,7 +32,7 @@
         $stmt_receitas->bindParam(':id_cozinheiro', $id_cozinheiro);
         $stmt_receitas->execute();
 
-        $sql_competencias = "SELECT nome, descricao, proeficiencia FROM competencia WHERE id_cozinheiro = :id_cozinheiro";
+        $sql_competencias = "SELECT nome, descricao, proficiencia FROM competencia WHERE id_cozinheiro = :id_cozinheiro";
         $stmt_competencias = $conn->prepare($sql_competencias);
         $stmt_competencias->bindParam(':id_cozinheiro', $id_cozinheiro);
         $stmt_competencias->execute();
@@ -92,6 +92,7 @@
             <h2>Outras Competências</h2>
             <div class="add_receita">
                 <a href="cad_competencia.php" class="btn_add_receita">+</a>
+                <a href="delete_competencia.php" class="btn_del_receita">-</a>
             </div>
         </div>
 
@@ -102,7 +103,7 @@
                         <h3><?php echo htmlspecialchars($competencia['nome']); ?></h3>
                         <div class="competencia_content">
                             <p><strong>Descrição:</strong> <?php echo htmlspecialchars($competencia['descricao']); ?></p>
-                            <p><strong>Proficiência(1-10):</strong> <?php echo htmlspecialchars($competencia['proeficiencia']); ?></p>
+                            <p><strong>Proficiência(1-10):</strong> <?php echo htmlspecialchars($competencia['proficiencia']); ?></p>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -117,6 +118,7 @@
             <h2>Minhas Receitas</h2>
             <div class="add_receita">
                 <a href="cad_receita.php" class="btn_add_receita">+</a>
+                <a href="delete_receita.php" class="btn_del_receita">-</a>
             </div>
         </div>
 

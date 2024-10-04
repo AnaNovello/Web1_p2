@@ -153,3 +153,16 @@ ADD CONSTRAINT fk_cozinheiro FOREIGN KEY (id_cozinheiro)
     REFERENCES public.cozinheiro (id)
     ON UPDATE NO ACTION
     ON DELETE CASCADE;
+
+-------------------------------------------------------------------------
+
+ALTER TABLE especializacao
+ALTER COLUMN nome TYPE VARCHAR(24);
+
+-------------------------------------------------------------------------
+
+ALTER TABLE public.competencia
+RENAME COLUMN proeficiencia TO proficiencia;
+
+-------------------------------------------------------------------------
+
