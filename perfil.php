@@ -77,8 +77,7 @@
                 <span class="info"><span class="bold">Área(experiência):</span> <?php echo $cozinheiro['especializacao'];?></span>
                 <span class="info"><span class="bold"></span>(<?php echo $cozinheiro['experiencia'];?> anos)</span>
             </p>
-
-            <p class="info"><span class="bold">Receitas:</span> <?php echo $cozinheiro['receitas']; ?></p>
+            <p class="info"><span class="bold">Receitas:</span> <?php echo count($receitas); ?></p>
             <p class="info"><span class="bold">Contato:</span> <?php echo $cozinheiro['contato']; ?></p>
         </div>
 
@@ -123,7 +122,9 @@
 
         <?php if (count($receitas) > 0): ?>
             <ul>
-                <?php foreach ($receitas as $receita): ?>
+                <?php
+                    $count = 0; 
+                    foreach ($receitas as $receita):?>
                     <div class="receita_item">
                         <h3><?php echo htmlspecialchars($receita['nome']); ?></h3>
                         <div class="receita_content">
