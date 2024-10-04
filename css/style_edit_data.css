@@ -72,7 +72,7 @@ select.input_cad {
 
 .btn_salvar {
     width: 100%; 
-    padding: 10px; 
+    padding: 20px; 
     background-color: #738bbe;
     color: white; 
     border: none;
@@ -98,8 +98,8 @@ select.input_cad {
 .btn_delete{
     margin-top: 5%;
     display: inline-block;
-    width: 94%;
-    padding: 20px; 
+    width: 97%;
+    padding: 10px; 
     background-color: #b92929;
     color: white; 
     border: none;

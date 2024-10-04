@@ -132,6 +132,9 @@ h2 {
     border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #f9f9f9;
+    overflow-y: auto;
+    word-wrap: break-word; 
+    word-break: break-word;
 }
 
 .receita_img {
@@ -214,7 +217,7 @@ h2 {
     background-color: #084908;
 }
 
-.container_espec{
+.container_espec {
     margin-top: 20px;
 }
 
@@ -227,4 +230,26 @@ h2 {
 .container_espec ul {
     list-style-type: none;
     padding: 0;
+}
+
+.competencia_item {
+    margin-bottom: 20px;
+    padding: 10px; /* Adicionado */
+    border: 1px solid #ddd; /* Adicionado */
+    border-radius: 5px; /* Adicionado */
+    background-color: #f9f9f9; /* Adicionado */
+    overflow-y: auto;
+    word-wrap: break-word; 
+    word-break: break-word;
+}
+
+.competencia_item h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.competencia_content {
+    font-size: 16px; /* Adicionado */
+    line-height: 1.5; /* Adicionado */
 }

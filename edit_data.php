@@ -4,6 +4,11 @@ include('id_sessao.php');
 
 $nome = $email = $data_nascimento = $especializacao = $experiencia = $contato = $biografia = '';
 
+$sql_especializacao = "SELECT DISTINCT nome FROM especializacao ORDER BY nome ASC";
+$stmt_especializacao = $conn->prepare($sql_especializacao);
+$stmt_especializacao->execute();
+$especializacoes = $stmt_especializacao->fetchAll(PDO::FETCH_ASSOC);
+
 if (isset($_SESSION['id'])) {
     $id_cozinheiro = $_SESSION['id'];
 
@@ -19,6 +24,7 @@ if (isset($_SESSION['id'])) {
         $email = $dados['email'] ?? '';
         $data_nascimento = $dados['data_nasc'] ?? '';
         $especializacao = $dados['especializacao'] ?? '';
+        //var_dump($especializacao);
         $experiencia = $dados['experiencia'] ?? '';
         $contato = $dados['contato'] ?? '';
         $foto_atual = $dados['foto'] ?? '';
@@ -124,9 +130,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label class="lbl_cad">Especialização</label>
                     <select class="input_cad" name="especializacao">
                         <option value="">Selecione...</option>
-                        <option value="Culinária Brasileira" <?php echo ($especializacao == 'Culinária Brasileira') ? 'selected' : ''; ?>>Culinária Brasileira</option>
-                        <option value="Culinária Internacional" <?php echo ($especializacao == 'Culinária Internacional') ? 'selected' : ''; ?>>Culinária Internacional</option>
-                        <option value="Cozinha Vegetariana" <?php echo ($especializacao == 'Cozinha Vegetariana') ? 'selected' : ''; ?>>Cozinha Vegetariana</option>
+                        <?php
+                            foreach ($especializacoes as $row):
+                                $selected = ($especializacao == $row['nome']) ? 'selected' : '';
+                        ?>
+                            <option value="<?php echo htmlspecialchars($row['nome']); ?>" <?php echo $selected; ?>>
+                                <?php echo htmlspecialchars($row['nome']); ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
                 <div class="campo_experiencia">
@@ -148,9 +159,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div>
                 <button type="submit" class="btn_salvar">Salvar</button>
             </div>
-            <div>
+            <!-- <div>
                 <a href="galeria.php" class="">diretorio</a>
-            </div>
+            </div> -->
             <div class="div_delete">
                 <a href="exclusao_conta.php" class="btn_delete">Deletar Conta</a>
             </div>

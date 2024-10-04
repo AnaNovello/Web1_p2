@@ -3,7 +3,7 @@
     include('id_sessao.php');
 
     if (!isset($_SESSION['id'])){
-        header("Location: login.php");
+        header("Location: index.php");
         exit();
     }
 
@@ -18,7 +18,7 @@
             
             if ($stmt_delete->execute()) {
                 session_destroy();
-                header("Location: login.php");
+                header("Location: index.php");
                 exit();
             } else {
                 $message = "Erro ao excluir conta. Tente novamente.";

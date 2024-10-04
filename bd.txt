@@ -135,4 +135,21 @@ ALTER TABLE public.cozinheiro
 ADD CONSTRAINT fk_id_especializacao FOREIGN KEY (id_especializacao)
 REFERENCES public.especializacao (id);
 
+CREATE TABLE competencia (
+    id SERIAL PRIMARY KEY,
+    id_cozinheiro INT REFERENCES cozinheiro(id) ON DELETE CASCADE,
+    nome VARCHAR(64) NOT NULL,
+    descricao VARCHAR(240),
+    proeficiencia INT CHECK (proeficiencia >= 1 AND proeficiencia <= 10)
+);
 
+-------------------------------------------------------------------------
+
+ALTER TABLE public.receita
+DROP CONSTRAINT fk_cozinheiro;
+
+ALTER TABLE public.receita
+ADD CONSTRAINT fk_cozinheiro FOREIGN KEY (id_cozinheiro)
+    REFERENCES public.cozinheiro (id)
+    ON UPDATE NO ACTION
+    ON DELETE CASCADE;
