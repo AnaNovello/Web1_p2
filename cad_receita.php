@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
     $descricao = $_POST['descricao'];
 
-    $upload_dir = 'Img\\perfil'.$id_cozinheiro.'\\receitas';
+    $galeria_dir = 'Img\\perfil'.$id_cozinheiro.'\\receitas\\';
     
     if(!is_dir($galeria_dir)){
         if(mkdir($galeria_dir, 0755, true)){
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $foto = $_FILES['foto'];
-    $foto_path = $upload_dir . basename($foto['name']);
+    $foto_path = $galeria_dir . basename($foto['name']);
     $upload_ok = 1;
     $imageFileType = strtolower(pathinfo($foto_path, PATHINFO_EXTENSION));
 

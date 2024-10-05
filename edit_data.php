@@ -74,8 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt_update->bindValue(':data_nascimento', null, PDO::PARAM_NULL);
     }
 
-    $stmt_update->bindParam(':especializacao', $especializacao);
-
     //mesma falha aqui
     if ($experiencia) {
         $stmt_update->bindValue(':experiencia', $experiencia);
@@ -83,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt_update->bindValue(':experiencia', 0);
     }
     
+    $stmt_update->bindParam(':especializacao', $especializacao);
     $stmt_update->bindParam(':contato', $contato);
     $stmt_update->bindParam(':id', $id_cozinheiro);
     $stmt_update->bindParam(':foto', $foto);

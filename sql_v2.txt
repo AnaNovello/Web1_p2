@@ -1,0 +1,54 @@
+CREATE TABLE IF NOT EXISTS especializacao
+(
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(24),
+    nivel INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS cozinheiro
+(
+    id SERIAL PRIMARY KEY,
+    email CHARACTER(140),
+    senha VARCHAR(60),
+    nome CHARACTER(64),
+    data_nasc DATE,
+    cpf CHARACTER(11),
+    especializacao VARCHAR(24),
+    experiencia INTEGER,
+    receitas INTEGER,
+    contato CHARACTER(140),
+    foto VARCHAR(255),
+    biografia VARCHAR(1000),
+    id_especializacao INTEGER,
+    CONSTRAINT fk_id_especializacao FOREIGN KEY (id_especializacao)
+        REFERENCES especializacao (id)
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS competencia
+(
+    id SERIAL PRIMARY KEY,
+    id_cozinheiro INTEGER,
+    nome VARCHAR(64) NOT NULL,
+    descricao VARCHAR(240),
+    proficiencia INTEGER,
+    CONSTRAINT competencia_id_cozinheiro_fkey FOREIGN KEY (id_cozinheiro)
+        REFERENCES cozinheiro (id)
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE,
+    CONSTRAINT competencia_proficiencia_check CHECK (proficiencia >= 1 AND proficiencia <= 10)
+);
+
+CREATE TABLE IF NOT EXISTS receita
+(
+    id SERIAL PRIMARY KEY,
+    nome CHARACTER(64),
+    descricao CHARACTER(240),
+    id_cozinheiro INTEGER,
+    foto VARCHAR(255),
+    CONSTRAINT fk_cozinheiro FOREIGN KEY (id_cozinheiro)
+        REFERENCES cozinheiro (id)
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+);
