@@ -1,6 +1,7 @@
 <?php
-    $usuario = 'postgres';
-    $senha = 'bisteka380s';
+    //preencher as credenciais 'usuario' e 'senha'
+    $usuario = '';
+    $senha = '';
     $host_bd = 'pgsql:host=localhost;dbname=p1_v2';
 
     try{
