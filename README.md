@@ -7,7 +7,7 @@ Este mini sistema foi desenvolvido como um protótipo de ambiente onde cozinheir
 - **CRUD para Cozinheiros:** Os usuários podem cadastrar, editar e excluir seus perfis.
 - **Operações em Entidades Secundárias:** Além da entidade principal, é possível criar, visualizar e deletar informações relacionadas às entidades secundárias, como especializações e competências.
 
-##Estrutura do Projeto
+## Estrutura do Projeto
 /css          -> Arquivos de estilo (CSS)
 /img          -> Imagens usadas no projeto
 
