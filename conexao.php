@@ -1,8 +1,8 @@
 <?php
-    //preencher as credenciais 'usuario' e 'senha'
-    $usuario = '';
-    $senha = '';
-    $host_bd = 'pgsql:host=localhost;dbname=p1_v2';
+    //preencher as variáveis $usuario, $senha e $host_bd
+    $usuario = 'postgres';
+    $senha = 'bisteka380s';
+    $host_bd = 'pgsql:host=localhost; dbname=p1_v2';
 
     try{
         $conn = new PDO($host_bd, $usuario, $senha);

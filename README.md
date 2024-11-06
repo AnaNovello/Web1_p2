@@ -20,8 +20,9 @@ Este mini sistema foi desenvolvido como um protótipo de ambiente onde cozinheir
 ## Instalação
 Para rodar este projeto localmente, siga os passos abaixo:
 
-1. Clone o repositório dentro da pasta htdocs
-2. Certifique-se de que o XAMPP esteja instalado e em execução.
-3. Crie o banco de dados no PostgreSQL utilizando o script SQL fornecido(sql_v2.sql)
-4. Configure o arquivo conexao.php com suas credenciais do banco de dados.
-5. Acesse a aplicação pelo navegador em: http://localhost/p1/index.php
+1. Certifique-se de que o XAMPP esteja instalado e em execução.
+2. Crie uma pasta com o nome 'p1' dentro da pasta htdocs
+3. Clone o repositório dentro da pasta 'p1'
+4. Instale o PostgreSQL e crie um novo banco de dados utilizando o script SQL fornecido(sql_v2.sql)
+5. Configure o arquivo conexao.php com suas credenciais do banco de dados.
+6. Acesse a aplicação pelo navegador em: http://localhost/p1/index.php
