@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro e Listagem - Página Única</title>
     <link rel="stylesheet" href="css/style_p2_index.css">
-    <!-- <link rel="stylesheet" href="css/style_modal.css"> -->
+    <link rel="stylesheet" href="css/style_modal.css"> 
+    <link rel="stylesheet" href="css/style_buttons.css"> 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 <body>
-
     <!-- Formulário de Cadastro da Entidade Principal -->
     <div id="cadastro-principal" class="section">
         <h1>Cadastro de Cozinheiro</h1>
@@ -34,147 +34,301 @@
                 <label for="confirmar_senha">Confirme sua senha:</label>
                 <input type="password" id="confirmar_senha" name="confirmar_senha" required>
             </div>
+        </form>
+    </div>
+    
+    <!-- Seleção de Competências e Receitas com botão para adicionar novo -->
+    <div class="form-group">
+        <label for="competencia">Competência:</label>
+        <!--<select id="select-competencia" name="competencia">
+            <option value="">Selecione uma competência</option>
+            <option value="">Competência 1</option>
+        </select>-->
+        <div class="btn_group">
+            <button type="button" id="btn-nova-competencia" class="buttons">Nova Competência</button>
+            <button id="btn-recarregar-competencias" class="buttons">Recarregar Lista</button>
+        </div>
+        
+        <!-- Listagem de Competências -->
+        <div id="listagem-competencias" class="section">
+            <div id="competencias-list">
+                <!-- Competências serão carregadas aqui -->
+            </div>
+        </div>
+    </div>
 
-            <!-- Seleção de Competências e Receitas com botão para adicionar novo -->
-            <div class="form-group">
-                <label for="competencia">Competência:</label>
-                <select id="select-competencia" name="competencia">
-                    <!-- Opções de competências serão carregadas aqui -->
-                </select>
-                <button type="button" id="btn-nova-competencia">Nova Competência</button>
+    <div class="form-group">
+        <label for="receita">Receita:</label>
+        <!--<select id="select-receita" name="receita">
+            <option value="">Selecione uma receita</option>
+            <option value="">Receita 1</option>
+            receita 1
+        </select>-->
+        <div class="btn_group">
+            <button type="button" id="btn-nova-receita" class="buttons">Nova Receita</button>
+            <button id="btn-recarregar-receitas" class="buttons">Recarregar Lista</button>
+        </div>
 
-                <!-- Listagem de Competências -->
-            <div id="listagem-competencias" class="section">
-                <button id="btn-recarregar-competencias">Recarregar Lista</button>
-                <div id="competencias-list">
-                    <!-- Competências serão carregadas aqui -->
+        <!-- Listagem de Receitas -->
+        <div id="listagem-receitas" class="section">
+            <div id="receitas-list">
+                <!-- Receitas serão carregadas aqui -->
+            </div>
+        </div>
+    </div>
+
+    <button  id="btn-cadastrar" type="submit" class="btn">Cadastrar</button>
+
+    <!-- Modal para cadastro de novas competências -->
+    <div id="modal-competencia" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="close-competencia">&times;</span>
+            <h2>Nova Competência</h2>
+            <form id="form-nova-competencia">
+                <div class="form-group">
+                    <label for="nome-competencia">Nome da Competência:</label>
+                    <input type="text" id="nome-competencia" name="nome-competencia" required>
                 </div>
-            </div>
-
-            </div>
-
-            <div class="form-group">
-                <label for="receita">Receita:</label>
-                <select id="select-receita" name="receita">
-                    <!-- Opções de receitas serão carregadas aqui -->
-                </select>
-                <button type="button" id="btn-nova-receita">Nova Receita</button>
-
-                <!-- Listagem de Receitas -->
-            <div id="listagem-receitas" class="section">
-                <button id="btn-recarregar-receitas">Recarregar Lista</button>
-                <div id="receitas-list">
-                    <!-- Receitas serão carregadas aqui -->
+                <div class="form-group">
+                    <label for="descricao-competencia">Descrição:</label>
+                    <textarea id="descricao-competencia" name="descricao-competencia" required></textarea>
                 </div>
-            </div>
-            </div>
-
-            <button type="submit" class="btn">Cadastrar</button>
-        </form>
+                <div class="form-group">
+                    <label for="proficiencia-competencia">Proeficiência (1-10):</label>
+                    <input type="number" id="proficiencia-competencia" name="proficiencia-competencia" min="1" max="10" required>
+                </div>
+                <button type="button" id="btn-salvar-competencia">Salvar Competência</button>
+            </form>
+        </div>
     </div>
 
-    <!-- Formulário Modal para Competência -->
-    <div id="modal-competencia" title="Adicionar Competência" style="display:none;">
-        <form id="form-nova-competencia">
-            <label for="nome-competencia">Nome:</label>
-            <input type="text" id="nome-competencia" name="nome" required>
-            <label for="descricao-competencia">Descrição:</label>
-            <textarea id="descricao-competencia" name="descricao"></textarea>
-            <label for="proficiencia-competencia">Proficiência:</label>
-            <input type="number" id="proficiencia-competencia" name="proficiencia" min="1" max="10" required>
-            <button type="submit">Salvar</button>
-        </form>
+    <!-- Modal para cadastro de novas receitas -->
+    <div id="modal-receita" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="close-receita">&times;</span>
+            <h2>Nova Receita</h2>
+            <form id="form-nova-receita">
+                <div class="form-group">
+                    <label for="nome-receita">Nome da Receita:</label>
+                    <input type="text" id="nome-receita" name="nome-receita" required>
+                </div>
+                <div class="form-group">
+                    <label for="descricao-receita">Descrição:</label>
+                    <textarea id="descricao-receita" name="descricao-receita" required></textarea>
+                </div>
+                <button type="button" id="btn-salvar-receita">Salvar Receita</button>
+            </form>
+        </div>
     </div>
 
-    <!-- Formulário Modal para Receita -->
-    <div id="modal-receita" title="Adicionar Receita" style="display:none;">
-        <form id="form-nova-receita" enctype="multipart/form-data">
-            <label for="nome-receita">Nome:</label>
-            <input type="text" id="nome-receita" name="nome" required>
-            <label for="descricao-receita">Descrição:</label>
-            <textarea id="descricao-receita" name="descricao"></textarea>
-            <label for="foto-receita">Foto:</label>
-            <input type="file" id="foto-receita" name="foto" accept="image/*" required>
-            <button type="submit">Salvar</button>
-        </form>
-    </div>
 
-    <!-- Scripts jQuery e jQuery UI -->
+
+
+    <!-- Scripts jQuery e Ajax -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
-            // Inicializa os diálogos
-            $("#modal-competencia").dialog({ autoOpen: false });
-            $("#modal-receita").dialog({ autoOpen: false });
-
-            // Abre o modal de nova competência
-            $("#btn-nova-competencia").click(function () {
-                $("#modal-competencia").dialog("open");
-            });
-
-            // Abre o modal de nova receita
-            $("#btn-nova-receita").click(function () {
-                $("#modal-receita").dialog("open");
-            });
-
-            // Submissão do formulário de nova competência
-            $("#form-nova-competencia").submit(function (event) {
-                event.preventDefault();
-                // Enviar dados via AJAX e recarregar o select de competência
-                $.post("adicionar-competencia.php", $(this).serialize(), function (data) {
-                    alert("Competência adicionada com sucesso!");
-                    $("#modal-competencia").dialog("close");
-                    atualizarCompetencias();
-                });
-            });
-
-            // Submissão do formulário de nova receita
-            $("#form-nova-receita").submit(function (event) {
-                event.preventDefault();
-                // Enviar dados via AJAX e recarregar o select de receita
-                let formData = new FormData(this);
+            // Função para carregar competências
+            function carregarCompetencias() {
                 $.ajax({
-                    url: "adicionar-receita.php",
-                    type: "POST",
-                    data: formData,
-                    contentType: false,
-                    processData: false,
+                    url: 'carregar_competencias.php',
+                    method: 'GET',
                     success: function (data) {
-                        alert("Receita adicionada com sucesso!");
-                        $("#modal-receita").dialog("close");
-                        atualizarReceitas();
+                        $('#competencias-list').html(data);
+                        $('#select-competencia').html(data);
+                    },
+                    error: function () {
+                        alert('Erro ao carregar competências');
+                    }
+                });
+            }
+
+            // Função para carregar receitas
+            function carregarReceitas() {
+                $.ajax({
+                    url: 'carregar_receitas.php',
+                    method: 'GET',
+                    success: function (data) {
+                        $('#receitas-list').html(data);
+                        $('#select-receita').html(data);
+                    },
+                    error: function () {
+                        alert('Erro ao carregar receitas');
+                    }
+                });
+            }
+
+            // Chama as funções ao carregar a página
+            //carregarCompetencias();
+            //carregarReceitas();
+
+            // Recarrega as listas quando os botões são clicados
+            //$('#btn-recarregar-competencias').on('click', carregarCompetencias);
+            //$('#btn-recarregar-receitas').on('click', carregarReceitas);
+
+            // Envia os dados do formulário de cadastro de cozinheiro via Ajax
+            $('#btn-cadastrar').on('click', function (e) {
+                e.preventDefault();
+
+                // Criar o objeto FormData para enviar todos os dados
+                const dadosCozinheiro = new FormData();
+                dadosCozinheiro.append('nome', $('#nome').val());
+                dadosCozinheiro.append('cpf', $('#cpf').val());
+                dadosCozinheiro.append('email', $('#email').val());
+                dadosCozinheiro.append('senha', $('#senha').val());
+                dadosCozinheiro.append('confirmar_senha', $('#confirmar_senha').val());
+
+                // Adiciona as competências temporárias ao FormData
+                dadosCozinheiro.append('competencias', JSON.stringify(competenciasTemp));
+
+                // Adiciona as receitas 
+                dadosCozinheiro.append('receitas', JSON.stringify(receitasTemp));
+
+                $.ajax({
+                    url: 'cadastrar_cozinheiro.php',
+                    method: 'POST',
+                    data: dadosCozinheiro,
+                    processData: false,  // Necessário para enviar arquivos
+                    contentType: false,  // Necessário para enviar arquivos
+                    success: function (response) {
+                        alert(response);
+                        // Limpa os arrays temporários após o cadastro
+                        competenciasTemp = [];
+                        receitasTemp = [];
+
+                        // Opcional: Limpa os campos do formulário principal
+                        $('#form-cadastro-cozinheiro')[0].reset();
+
+                        // Atualiza a lista de competências e receitas
+                        //carregarCompetencias();
+                        //carregarReceitas();
+                    },
+                    error: function () {
+                        alert('Erro ao cadastrar');
                     }
                 });
             });
 
-            // Funções para atualizar listas de seleções
-            function atualizarCompetencias() {
-                $.getJSON("listar-competencia.php", function (data) {
-                    $("#select-competencia").empty();
-                    $.each(data, function (key, val) {
-                        $("#select-competencia").append(new Option(val.nome, val.id));
-                    });
+            // Funções para abrir e fechar o modal de competência
+            $('#btn-nova-competencia').on('click', function () {
+                $('#modal-competencia').show();
+            });
+            $('#close-competencia').on('click', function () {
+                $('#modal-competencia').hide();
+            });
+
+            // Funções para abrir e fechar o modal de receita
+            $('#btn-nova-receita').on('click', function () {
+                $('#modal-receita').show();
+            });
+            $('#close-receita').on('click', function () {
+                $('#modal-receita').hide();
+            });
+
+            let competenciasTemp = [];
+            let receitasTemp = [];
+
+            // Função para atualizar a exibição das competências temporárias
+            function atualizarListaCompetencias() {
+                let html = "";
+                competenciasTemp.forEach((competencia, index) => {
+                    html += `<p><strong>Competência ${index + 1}:</strong> ${competencia.nome} - ${competencia.descricao} (Proficiencia: ${competencia.proficiencia})</p>`;
                 });
+                $('#competencias-list').html(html);
             }
 
-            function atualizarReceitas() {
-                $.getJSON("listar-receita.php", function (data) {
-                    $("#select-receita").empty();
-                    $.each(data, function (key, val) {
-                        $("#select-receita").append(new Option(val.nome, val.id));
-                    });
+            // Função para atualizar a exibição das receitas temporárias
+            function atualizarListaReceitas() {
+                let html = "";
+                receitasTemp.forEach((receita, index) => {
+                    html += `<p><strong>Receita ${index + 1}:</strong> ${receita.nome} - ${receita.descricao}</p>`;
                 });
+                $('#receitas-list').html(html);
             }
 
-            // Botões para recarregar listas de competências e receitas
-            $("#btn-recarregar-competencias").click(atualizarCompetencias);
-            $("#btn-recarregar-receitas").click(atualizarReceitas);
+            // Salva a nova competência temporariamente
+            $('#btn-salvar-competencia').on('click', function () {
+                const competencia = {
+                    nome: $('#nome-competencia').val(),
+                    descricao: $('#descricao-competencia').val(),
+                    proficiencia: $('#proficiencia-competencia').val()
+                };
 
-            // Inicializa listas
-            atualizarCompetencias();
-            atualizarReceitas();
+                competenciasTemp.push(competencia);
+                $('#modal-competencia').hide();
+                alert("Competência adicionada!");
+
+                // Limpa os campos do formulário
+                $('#form-nova-competencia')[0].reset();
+
+                /*$.ajax({
+                    url: 'cadastrar_competencia.php',
+                    method: 'POST',
+                    data: competencia,
+                    success: function (response) {
+                        alert(response);
+                        $('#modal-competencia').hide();
+                        carregarCompetencias(); // Recarrega as competências
+                    },
+                    error: function () {
+                        alert('Erro ao cadastrar competência');
+                    }
+                });*/
+            });
+
+            // Exibe a lista de competências temporárias ao clicar em "Recarregar Lista"
+            $('#btn-recarregar-competencias').on('click', function () {
+                atualizarListaCompetencias();
+            });
+
+            // Exibe a lista de receitas temporárias ao clicar em "Recarregar Lista"
+            $('#btn-recarregar-receitas').on('click', function () {
+                atualizarListaReceitas();
+            });
+
+            // Envia os dados do formulário de nova receita
+            $('#btn-salvar-receita').on('click', function () {
+                const receita = {
+                    nome: $('#nome-receita').val(),
+                    descricao: $('#descricao-receita').val()
+                };
+                receitasTemp.push(receita);
+                $('#modal-receita').hide();
+
+                // Limpa os campos do formulário
+                $('#form-nova-receita')[0].reset();
+
+                /*$.ajax({
+                    url: 'cadastrar_receita.php',
+                    method: 'POST',
+                    data: formData,
+                    processData: false,  // Necessário para o envio de arquivo
+                    contentType: false,  // Necessário para o envio de arquivo
+                    success: function (response) {
+                        alert(response);
+                        $('#modal-receita').hide();
+                        carregarReceitas(); // Recarrega as receitas
+                    },
+                    error: function () {
+                        alert('Erro ao cadastrar receita');
+                    }
+                });*/
+            });
+            // Exibe a lista de competências temporárias ao clicar em "Recarregar Lista"
+            $('#btn-recarregar-competencias').on('click', function () {
+                atualizarListaCompetencias();
+            });
+
+            // Exibe a lista de receitas temporárias ao clicar em "Recarregar Lista"
+            $('#btn-recarregar-receitas').on('click', function () {
+                atualizarListaReceitas();
+            });
+
+
+
+
         });
     </script>
+
 </body>
 </html>

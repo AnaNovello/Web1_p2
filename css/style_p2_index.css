@@ -90,3 +90,10 @@ input[type="password"] {
 .receita-descricao {
     flex-grow: 1;
 }
+
+#select-competencia, #select-receita {
+    width: 100%; /* Ajuste a largura conforme necessário, aqui define a largura completa do container */
+    max-width: 400px; /* Largura máxima, altere conforme desejado */
+    padding: 5px;
+    margin-top: 5px;
+}
