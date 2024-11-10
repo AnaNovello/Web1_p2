@@ -75,6 +75,11 @@
         <div id="success-message" style="display: none; color: green; font-weight: bold; margin-top: 10px;"></div>
         <div id="error-message"></div>
 
+        <!-- Dialog de Confirmação de Exclusão -->
+        <div id="dialog-confirm" title="Confirmação de Exclusão" style="display:none;">
+            <p>Tem certeza de que deseja excluir este registro?</p>
+        </div>
+
 
     </div>
 
@@ -125,7 +130,7 @@
         <div class="modal-content">
             <span class="close" id="close-editar-competencia">&times;</span>
             <h2>Editar Competências</h2>
-            <div id="competencias-list-edit">
+            <div id="competencias-list-edit" class="edit-list">
                 <!-- Lista de competências para editar/excluir será carregada aqui -->
             </div>
         </div>
@@ -136,23 +141,40 @@
         <div class="modal-content">
             <span class="close" id="close-editar-receita">&times;</span>
             <h2>Editar Receitas</h2>
-            <div id="receitas-list-edit">
+            <div id="receitas-list-edit" class="edit-list">
                 <!-- Lista de receitas para editar/excluir será carregada aqui -->
             </div>
         </div>
     </div>
 
+    <div id="dialog-editar" style="display:none;">
+        <form>
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" required>
+            <label for="descricao">Descrição:</label>
+            <textarea name="descricao" required></textarea>
+            <label for="proficiencia">Proficiência (1-10):</label>
+            <input type="number" name="proficiencia" min="1" max="10">
+        </form>
+    </div>
+
+    <div id="dialog-confirm" title="Confirmar exclusão" style="display:none;">
+        <p>Tem certeza de que deseja excluir este registro?</p>
+    </div>
 
 
 
 
     <!-- Scripts jQuery e Ajax -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script>
         $(document).ready(function () {
             let competenciasTemp = [];
             let receitasTemp = [];
             let cozinheiroID = null;
+            let idParaExcluir = null;
+            let tipoParaExcluir = null;
 
             // Função para exibir mensagem temporária de sucesso
             function showSuccessMessage(message) {
@@ -200,6 +222,10 @@
                             competenciasTemp = [];
                             receitasTemp = [];
                             cozinheiroID = result.cozinheiro_id;
+
+                            // Recarrega as listas de competência e receita
+                            atualizarListaCompetencias();
+                            atualizarListaReceitas();
                         } else {
                             alert(result.error);
                         }
@@ -246,6 +272,93 @@
                 $('#modal-editar-receita').hide();
             });
 
+
+            // Define o diálogo de edição de dados
+            function abrirDialogEdicao(tipo, id, nomeAtual, descricaoAtual, proficienciaAtual) {
+                // Preenche os campos com os valores atuais
+                $('#dialog-editar input[name="nome"]').val(nomeAtual);
+                $('#dialog-editar textarea[name="descricao"]').val(descricaoAtual);
+                if (tipo === "competencia") {
+                    $('#dialog-editar input[name="proficiencia"]').val(proficienciaAtual).show();
+                } else {
+                    $('#dialog-editar input[name="proficiencia"]').hide();
+                }
+
+                $('#dialog-editar').dialog({
+                    title: `Editar ${tipo === "competencia" ? "Competência" : "Receita"}`,
+                    modal: true,
+                    buttons: {
+                        "Salvar": function () {
+                            const nome = $('#dialog-editar input[name="nome"]').val();
+                            const descricao = $('#dialog-editar textarea[name="descricao"]').val();
+                            const proficiencia = $('#dialog-editar input[name="proficiencia"]').val();
+                            if (tipo === "competencia") {
+                                atualizarCompetencia(id, nome, descricao, proficiencia);
+                            } else {
+                                atualizarReceita(id, nome, descricao);
+                            }
+                            $(this).dialog("close");
+                        },
+                        "Cancelar": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            }
+
+            // Define o diálogo de confirmação de exclusão
+            function abrirDialogExclusao(tipo, id) {
+                $('#dialog-confirm').dialog({
+                    title: `Confirmar exclusão de ${tipo === "competencia" ? "Competência" : "Receita"}`,
+                    modal: true,
+                    buttons: {
+                        "Excluir": function () {
+                            if (tipo === "competencia") {
+                                confirmarExclusaoCompetencia(id);
+                            } else {
+                                confirmarExclusaoReceita(id);
+                            }
+                            $(this).dialog("close");
+                        },
+                        "Cancelar": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            }
+
+            // Função para atualizar competência no servidor
+            function atualizarCompetencia(id, nome, descricao, proficiencia) {
+                $.ajax({
+                    url: 'editar_competencia.php',
+                    method: 'POST',
+                    data: { id, nome, descricao, proficiencia },
+                    success: function(response) {
+                        alert("Competência atualizada com sucesso!");
+                        carregarCompetenciasParaEditar();
+                    },
+                    error: function() {
+                        alert("Erro ao atualizar competência.");
+                    }
+                });
+            }
+
+            // Função para atualizar receita no servidor
+            function atualizarReceita(id, nome, descricao) {
+                $.ajax({
+                    url: 'editar_receita.php',
+                    method: 'POST',
+                    data: { id, nome, descricao },
+                    success: function(response) {
+                        alert("Receita atualizada com sucesso!");
+                        carregarReceitasParaEditar();
+                    },
+                    error: function() {
+                        alert("Erro ao atualizar receita.");
+                    }
+                });
+            }
+
             // Função para carregar competências do banco e exibir no modal de edição
             function carregarCompetenciasParaEditar() {
                 $.ajax({
@@ -256,22 +369,24 @@
                         let html = competencias.map(competencia => `
                             <div>
                                 <p><strong>${competencia.nome}</strong>: ${competencia.descricao} (Proficiência: ${competencia.proficiencia})</p>
-                                <button class="editar-competencia" data-id="${competencia.id}">Editar</button>
+                                <button class="editar-competencia" data-id="${competencia.id}" data-nome="${competencia.nome}" data-descricao="${competencia.descricao}" data-proficiencia="${competencia.proficiencia}">Editar</button>
                                 <button class="excluir-competencia" data-id="${competencia.id}">Excluir</button>
                             </div>
                         `).join('');
                         $('#competencias-list-edit').html(html);
-                        
-                        // Adicione eventos para os botões de editar e excluir
+                        // Adiciona eventos de click para os botões de editar e excluir após o HTML ser carregado
                         $('.editar-competencia').on('click', function() {
-                            const id = $(this).data('id');
-                            editarCompetencia(id);
-                        });
-                        
-                        $('.excluir-competencia').on('click', function() {
-                            const id = $(this).data('id');
-                            excluirCompetencia(id);
-                        });
+                        const id = $(this).data('id');
+                        const nome = $(this).data('nome');
+                        const descricao = $(this).data('descricao');
+                        const proficiencia = $(this).data('proficiencia');
+                        abrirDialogEdicao("competencia", id, nome, descricao, proficiencia);
+                    });
+                    
+                    $('.excluir-competencia').on('click', function() {
+                        const id = $(this).data('id');
+                        abrirDialogExclusao("competencia", id);
+                    });
                     },
                     error: function() {
                         alert('Erro ao carregar competências.');
@@ -289,21 +404,23 @@
                         let html = receitas.map(receita => `
                             <div>
                                 <p><strong>${receita.nome}</strong>: ${receita.descricao}</p>
-                                <button class="editar-receita" data-id="${receita.id}">Editar</button>
+                                <button class="editar-receita" data-id="${receita.id}" data-nome="${receita.nome}" data-descricao="${receita.descricao}">Editar</button>
                                 <button class="excluir-receita" data-id="${receita.id}">Excluir</button>
                             </div>
                         `).join('');
                         $('#receitas-list-edit').html(html);
 
-                        // Adicione eventos para os botões de editar e excluir
+                        // Adiciona eventos para os botões de editar e excluir
                         $('.editar-receita').on('click', function() {
                             const id = $(this).data('id');
-                            editarReceita(id);
+                            const nome = $(this).data('nome');
+                            const descricao = $(this).data('descricao');
+                            abrirDialogEdicao("receita", id, nome, descricao);
                         });
                         
                         $('.excluir-receita').on('click', function() {
                             const id = $(this).data('id');
-                            excluirReceita(id);
+                            abrirDialogExclusao("receita", id);
                         });
                     },
                     error: function() {
@@ -313,7 +430,6 @@
             }
 
             function editarCompetencia(id) {
-                // Enviar dados de edição para o servidor ou abrir outro modal de edição
                 const nome = prompt("Digite o novo nome da competência:");
                 const descricao = prompt("Digite a nova descrição da competência:");
                 const proficiencia = prompt("Digite a nova proficiência da competência (1-10):");
@@ -332,21 +448,32 @@
                 });
             }
 
-            function excluirCompetencia(id) {
-                if (confirm("Tem certeza de que deseja excluir esta competência?")) {
-                    $.ajax({
-                        url: 'excluir_competencia.php',
-                        method: 'POST',
-                        data: { id },
-                        success: function(response) {
-                            alert("Competência excluída com sucesso!");
-                            carregarCompetenciasParaEditar();
-                        },
-                        error: function() {
-                            alert("Erro ao excluir competência.");
+            $("#dialog-confirm").dialog({
+                autoOpen: false,
+                resizable: false,
+                height: "auto",
+                width: 400,
+                modal: true,
+                buttons: {
+                    "Excluir": function () {
+                        if (tipoParaExcluir === "competencia") {
+                            confirmarExclusaoCompetencia(idParaExcluir);
+                        } else if (tipoParaExcluir === "receita") {
+                            confirmarExclusaoReceita(idParaExcluir);
                         }
-                    });
+                        $(this).dialog("close");
+                    },
+                    "Cancelar": function () {
+                        $(this).dialog("close");
+                    }
                 }
+            });
+
+
+            function excluirCompetencia(id) {
+                idParaExcluir = id;
+                tipoParaExcluir = "competencia";
+                $("#dialog-confirm").dialog("open");
             }
 
             function editarReceita(id) {
@@ -368,20 +495,40 @@
             }
 
             function excluirReceita(id) {
-                if (confirm("Tem certeza de que deseja excluir esta receita?")) {
-                    $.ajax({
-                        url: 'excluir_receita.php',
-                        method: 'POST',
-                        data: { id },
-                        success: function(response) {
-                            alert("Receita excluída com sucesso!");
-                            carregarReceitasParaEditar();
-                        },
-                        error: function() {
-                            alert("Erro ao excluir receita.");
-                        }
-                    });
-                }
+                idParaExcluir = id;
+                tipoParaExcluir = "receita";
+                $("#dialog-confirm").dialog("open");
+            }
+
+             // Função para confirmar a exclusão de competência
+            function confirmarExclusaoCompetencia(id) {
+                $.ajax({
+                    url: 'excluir_competencia.php',
+                    method: 'POST',
+                    data: { id },
+                    success: function(response) {
+                        alert("Competência excluída com sucesso!");
+                        carregarCompetenciasParaEditar();
+                    },
+                    error: function() {
+                        alert("Erro ao excluir competência.");
+                    }
+                });
+            }
+
+            function confirmarExclusaoReceita(id) {
+                $.ajax({
+                    url: 'excluir_receita.php',
+                    method: 'POST',
+                    data: { id },
+                    success: function(response) {
+                        alert("Receita excluída com sucesso!");
+                        carregarReceitasParaEditar();
+                    },
+                    error: function() {
+                        alert("Erro ao excluir receita.");
+                    }
+                });
             }
 
             // Função para atualizar a exibição das competências temporárias
@@ -418,10 +565,6 @@
 
             // Salva a nova competência
             $('#btn-salvar-competencia').on('click', function () {
-                /*if (!cozinheiroID) {
-                    alert("Primeiro cadastre o cozinheiro.");
-                    return;
-                }*/
                 const competencia = {
                     nome: $('#nome-competencia').val(),
                     descricao: $('#descricao-competencia').val(),
@@ -438,7 +581,6 @@
                         if (result.success) {
                             alert(result.success);
                             $('#modal-competencia').hide();
-                            //atualizarListaCompetencias();
                         } else {
                             alert(result.error);
                         }
@@ -462,10 +604,6 @@
 
             // Evento de cadastro de nova receita
             $('#btn-salvar-receita').on('click', function () {
-                /*if (!cozinheiroID) {
-                    alert("Primeiro cadastre o cozinheiro.");
-                    return;
-                }*/
                 const receita = {
                     nome: $('#nome-receita').val(),
                     descricao: $('#descricao-receita').val(),
@@ -481,7 +619,6 @@
                         if (result.success) {
                             alert(result.success);
                             $('#modal-receita').hide();
-                            //atualizarListaReceitas();
                         } else {
                             alert(result.error);
                         }

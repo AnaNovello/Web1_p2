@@ -30,3 +30,60 @@
     max-width: 100%;          /* Limita a largura do texto ao tamanho do modal */
     white-space: normal;      /* Permite quebras de linha normais */
 }
+
+/* Estilo do contêiner dos itens de edição */
+.edit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 300px; /* Define uma altura máxima e rolagem */
+    overflow-y: auto;
+}
+
+/* Estilo para cada item no modal */
+.edit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo do título e descrição */
+.edit-item-text {
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+.edit-item-text p {
+    margin: 0;
+    word-break: break-word;
+    color: #333;
+}
+
+/* Estilo dos botões de ação (Editar e Excluir) */
+.edit-item-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-item button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.edit-item .btn-edit {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.edit-item .btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
