@@ -23,3 +23,10 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.modal-content p {
+    word-wrap: break-word;    /* Quebra o texto automaticamente se for muito longo */
+    overflow-wrap: break-word;
+    max-width: 100%;          /* Limita a largura do texto ao tamanho do modal */
+    white-space: normal;      /* Permite quebras de linha normais */
+}

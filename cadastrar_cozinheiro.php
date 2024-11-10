@@ -15,28 +15,19 @@ try {
     $stmt->execute([$nome, $cpf, $email, $senha]);
     $cozinheiro_id = $conn->lastInsertId();
 
-    // Salva as competências
-    $competencias = json_decode($_POST['competencias'], true);
-    $stmt_competencia = $conn->prepare("INSERT INTO competencia (nome, descricao, proficiencia, id_cozinheiro) VALUES (?, ?, ?, ?)");
-    if (is_array($competencias)) {
-        foreach ($competencias as $competencia) {
-            $stmt_competencia->execute([$competencia['nome'], $competencia['descricao'], $competencia['proficiencia'], $cozinheiro_id]);
-        }
-    }
+    // Atualiza as competências não associadas para incluir o ID do cozinheiro
+    $stmt_update_competencia = $conn->prepare("UPDATE competencia SET id_cozinheiro = ? WHERE id_cozinheiro IS NULL");
+    $stmt_update_competencia->execute([$cozinheiro_id]);
 
-    // Salva as receitas
-    $receitas = json_decode($_POST['receitas'], true);
-    $stmt_receita = $conn->prepare("INSERT INTO receita (nome, descricao, id_cozinheiro) VALUES (?, ?, ?)");
-    if (is_array($receitas)) {
-        foreach ($receitas as $receita) {
-            $stmt_receita->execute([$receita['nome'], $receita['descricao'], $cozinheiro_id]);
-        }
-    }
+    // Atualiza as receitas não associadas para incluir o ID do cozinheiro
+    $stmt_update_receita = $conn->prepare("UPDATE receita SET id_cozinheiro = ? WHERE id_cozinheiro IS NULL");
+    $stmt_update_receita->execute([$cozinheiro_id]);
 
+    // Confirma a transação
     $conn->commit();
-    echo "Cozinheiro e dados associados cadastrados com sucesso!";
+    echo json_encode(["success" => "Cozinheiro e dados associados cadastrados com sucesso!"]);
 } catch (Exception $e) {
     $conn->rollBack();
-    echo "Erro ao cadastrar: " . $e->getMessage();
+    echo json_encode(["error" => "Erro ao cadastrar: " . $e->getMessage()]);
 }
 ?>

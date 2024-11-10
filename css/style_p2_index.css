@@ -9,15 +9,26 @@ body {
     background-color: #f5f8fa;
     color: #333;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 600px; /* Define uma largura máxima menor */
+    width: 100%; /* Permite que a largura ocupe 100% até o limite da largura máxima */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Leve sombra para destacar o conteúdo */
 }
 
 .section {
     margin-bottom: 40px;
 }
 
-.section h1 {
+.titulo {
     margin-bottom: 20px;
-    color: #2c3e50;
+    color: #46994a;
     text-align: center;
 }
 
@@ -41,20 +52,30 @@ input[type="password"] {
 }
 
 .btn {
-    padding: 10px 20px;
+    padding: 15px;           /* Aumenta a altura do botão */
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    display: block;
-    width: 100%;
     text-align: center;
+    width: 80%;              /* Reduz a largura do botão */
+    max-width: 100%;        /* Largura máxima do botão */
+    margin: 0 auto;          /* Centraliza o botão */
+    display: block;
 }
 
 .btn:hover {
-    background-color: #45a049;
+    background-color: #46994a;
+}
+
+/* Alinhamento dos botões dentro de .btn_group */
+.btn_group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
 }
 
 .competencias, .receitas {
@@ -96,4 +117,20 @@ input[type="password"] {
     max-width: 400px; /* Largura máxima, altere conforme desejado */
     padding: 5px;
     margin-top: 5px;
+}
+
+#competencias-list p, #receitas-list p {
+    white-space: normal;        /* Evita que o texto quebre para uma nova linha */
+    overflow: hidden;           /* Oculta o conteúdo que ultrapassa o container */
+    word-wrap: break-word;
+    max-width: 100%;
+    padding-top: 5px;            /* Limita a largura ao tamanho do container */
+}
+
+#error-message {
+    display: none;            /* A mensagem começa oculta */
+    color: red;               /* Cor do texto em vermelho para erros */
+    font-weight: bold;
+    text-align: center;       /* Centraliza o texto */
+    margin-top: 10px;         /* Espaçamento acima */
 }
