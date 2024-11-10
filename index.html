@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro e Listagem - Página Única</title>
+    <link rel="stylesheet" href="css/style_p2_index.css">
+    <link rel="stylesheet" href="css/style_modal.css"> 
+    <link rel="stylesheet" href="css/style_buttons.css"> 
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<body>
+    <div class="container">
+        <div id="cadastro-principal" class="section">
+            <h1 class="titulo">Cadastro de Cozinheiro</h1>
+            <form id="form-cadastro-cozinheiro">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="cpf">CPF:</label>
+                    <input type="text" id="cpf" name="cpf" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmar_senha">Confirme sua senha:</label>
+                    <input type="password" id="confirmar_senha" name="confirmar_senha" required>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Campo de Competências -->
+        <div class="form-group">
+            <label for="competencia">Competência:</label>
+            <div class="btn_group">
+                <button type="button" id="btn-nova-competencia" class="buttons">Nova Competência</button>
+                <button id="btn-recarregar-competencias" class="buttons">Recarregar Lista</button>
+                <button id="btn-editar-competencias" class="buttons">Editar</button>
+            </div>
+
+            <div id="listagem-competencias" class="section">
+                <div id="competencias-list">
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Campo de Receitas -->
+        <div class="form-group">
+            <label for="receita">Receita:</label>
+            <div class="btn_group">
+                <button type="button" id="btn-nova-receita" class="buttons">Nova Receita</button>
+                <button id="btn-recarregar-receitas" class="buttons">Recarregar Lista</button>
+                <button id="btn-editar-receitas" class="buttons">Editar</button>
+            </div>
+
+            <div id="listagem-receitas" class="section">
+                <div id="receitas-list">
+                    
+                </div>
+            </div>
+        </div>
+
+        <button  id="btn-cadastrar" type="submit" class="btn">Cadastrar</button>
+        <div id="success-message" style="display: none; color: green; font-weight: bold; margin-top: 10px;"></div>
+        <div id="error-message"></div>
+
+        <!-- Confirmação de Exclusão -->
+        <div id="dialog-confirm" title="Confirmação de Exclusão" style="display:none;">
+            <p>Tem certeza de que deseja excluir este registro?</p>
+        </div>
+
+
+    </div>
+
+    <!-- Modal para cadastro de novas Competências -->
+    <div id="modal-competencia" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="close-competencia">&times;</span>
+            <h2>Nova Competência</h2>
+            <form id="form-nova-competencia">
+                <div class="form-group">
+                    <label for="nome-competencia">Nome da Competência:</label>
+                    <input type="text" id="nome-competencia" name="nome-competencia" required>
+                </div>
+                <div class="form-group">
+                    <label for="descricao-competencia">Descrição:</label>
+                    <textarea id="descricao-competencia" name="descricao-competencia" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="proficiencia-competencia">Proeficiência (1-10):</label>
+                    <input type="number" id="proficiencia-competencia" name="proficiencia-competencia" min="1" max="10" required>
+                </div>
+                <button type="button" id="btn-salvar-competencia">Salvar Competência</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para cadastro de novas Receitas -->
+    <div id="modal-receita" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="close-receita">&times;</span>
+            <h2>Nova Receita</h2>
+            <form id="form-nova-receita">
+                <div class="form-group">
+                    <label for="nome-receita">Nome da Receita:</label>
+                    <input type="text" id="nome-receita" name="nome-receita" required>
+                </div>
+                <div class="form-group">
+                    <label for="descricao-receita">Descrição:</label>
+                    <textarea id="descricao-receita" name="descricao-receita" required></textarea>
+                </div>
+                <button type="button" id="btn-salvar-receita">Salvar Receita</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para edição de Competências -->
+    <div id="modal-editar-competencia" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="close-editar-competencia">&times;</span>
+            <h2>Editar Competências</h2>
+            <div id="competencias-list-edit" class="edit-list">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para edição de Receitas -->
+    <div id="modal-editar-receita" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" id="close-editar-receita">&times;</span>
+            <h2>Editar Receitas</h2>
+            <div id="receitas-list-edit" class="edit-list">
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog para edição de Competência -->
+    <div id="dialog-editar" style="display:none;">
+        <form>
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" required>
+            <label for="descricao">Descrição:</label>
+            <textarea name="descricao" required></textarea>
+            <label for="proficiencia">Proficiência (1-10):</label>
+            <input type="number" name="proficiencia" min="1" max="10">
+        </form>
+    </div>
+
+    <!-- Dialog para confirmar Exclusão de registro -->
+    <div id="dialog-confirm" title="Confirmar exclusão" style="display:none;">
+        <p>Tem certeza de que deseja excluir este registro?</p>
+    </div>
+
+    <!-- Dependências jQuery e jQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- Scripts -->
+    <script src="js\scripts.js"></script>
+
+</body>
+</html>
